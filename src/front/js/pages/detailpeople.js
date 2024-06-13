@@ -31,10 +31,9 @@ export const DetailPeople = () => {
             <div className="container d-flex justify-content-center text-danger">
                 <h4 className="card-title w-2 px-5">Name <br /><br /> {store.people?.properties?.name}</h4>
                 <h4 className="card-text w-2 m-2 px-5">Birth Year <br /><br /> {store.people?.properties?.birth_year}</h4>
-                <h4 className="card-text w-2 m-2 px-5">Gender <br /><br /> {store.people?.properties?.gender}</h4>
-                <h4 className="card-text w-2 m-2 px-5">Height <br /><br /> {store.people?.properties?.height}</h4>
-                <h4 className="card-text w-2 m-2 px-5">Skin Color<br /><br /> {store.people?.properties?.skin_color}</h4>
-                <h4 className="card-text w-2 m-2 px-5">Eye Color <br /><br /> {store.people?.properties?.eye_color}</h4>
+                <h4 className="card-text w-2 m-2 px-5">Eye Color <br /><br /> {store.people?.properties?.gender}</h4>
+                <h4 className="card-text w-2 m-2 px-5">Hair Color <br /><br /> {store.people?.properties?.height}</h4>
+                <h4 className="card-text w-2 m-2 px-5"> <br /><br /> {store.people?.properties?.eye_color}</h4>
             </div>
         </>
     )

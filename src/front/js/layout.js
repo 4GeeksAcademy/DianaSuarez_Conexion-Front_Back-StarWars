@@ -6,7 +6,8 @@ import injectContext from "./store/appContext";
 import { Navbar } from "./component/navbar.js";
 import { Footer } from "./component/footer";
 import { Signup } from "./component/signup.js";
-import { Login } from "./component/login.js";
+// import { Login } from "../component/login.js";
+import { Login } from "./pages/login.js";
 import { Home } from "./pages/home.js";
 import { DetailPeople } from "./pages/detailpeople.js";
 

@@ -6,3 +6,15 @@
     background-color: grey;
     margin-left: 4px;
 }
+
+.contactForm {
+    width: 360px;
+    height: 440px;
+    margin:auto;
+    margin-top: 80px;
+    margin-bottom: 80px;
+    background-color: #fff;
+    padding: 30px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    justify-content: center;
+}
