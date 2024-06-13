@@ -1,7 +1,8 @@
-/*
-    home.css: This website contains selectors only used in home.css
+.navbar{
+    background-color: rgb(202, 201, 201) !important;
+}
 
-    All pages share the styles on index.css but you should create 
-    one more css for each page that will contain the selected used 
-    on that page only (the ones not reused in other pages).
-*/
+.contador{
+    background-color: grey;
+    margin-left: 4px;
+}

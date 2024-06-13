@@ -1,26 +1,30 @@
-import React, { useContext } from "react";
-import { Context } from "../store/appContext";
-import rigoImageUrl from "../../img/rigo-baby.jpg";
+import React, { useContext, useEffect, useState } from "react";
+import { Context } from "../store/appContext.js";
 import "../../styles/home.css";
+import { CardPeople } from "../component/cardpeople.js";
+import { Signup } from "../component/signup.js";
+import Login from "../component/login.js";
 
 export const Home = () => {
 	const { store, actions } = useContext(Context);
 
+	useEffect(() => {
+		actions.getPeople()
+	}, [])
+
 	return (
-		<div className="text-center mt-5">
-			<h1>Hello Rigo!!</h1>
-			<p>
-				<img src={rigoImageUrl} />
-			</p>
-			<div className="alert alert-info">
-				{store.message || "Loading message from the backend (make sure your python backend is running)..."}
+		<div className="text-danger ms-5"><h1>Characters</h1>
+		{/* <Signup/> */}
+			<div className="Map Cards text-dark d-flex" style={{ overflowX: "scroll" }}>
+				{store.peoples.map((card) => {
+					//   console.log(card);
+					return (
+						<CardPeople card={card} key={card.uid} />
+					)
+				})
+				}
 			</div>
-			<p>
-				This boilerplate comes with lots of documentation:{" "}
-				<a href="https://start.4geeksacademy.com/starters/react-flask">
-					Read documentation
-				</a>
-			</p>
 		</div>
-	);
+	)
 };
+
