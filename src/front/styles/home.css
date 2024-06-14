@@ -1,5 +1,10 @@
-.navbar{
-    background-color: rgb(202, 201, 201) !important;
+.navbar {
+    background-color:  #1d2952d0;
+}
+
+.logo {
+    width: 60px;
+    margin-left: 20px;
 }
 
 .contador{
@@ -17,4 +22,13 @@
     padding: 30px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
     justify-content: center;
+}
+
+body{
+    min-height: 800vh; 
+}
+
+footer {
+    background: #1d2952d0 !important;
+    height: 110px
 }

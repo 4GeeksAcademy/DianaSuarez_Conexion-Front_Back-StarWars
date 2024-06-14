@@ -1,79 +1,122 @@
-import React, { useContext, useEffect, useState} from "react";
-import { Link } from "react-router-dom";
-import { Context } from "../store/appContext.js";
+import React, { useContext, useEffect } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { Context } from "../store/appContext";
+import logoImageUrl from "../../img/Logo2.png";
+import "../../styles/index.css";
 
 export const Navbar = () => {
-	const { store, actions } = useContext(Context);
-	const [favoritos, setFavoritos]= useState(store.favorites)
-	console.log(store.favorites);
-	useEffect(() =>{
-		if (sessionStorage.getItem("token")) {
-			actions.getFavorites(setFavoritos)
+	const { store, actions } = useContext(Context)
+	const navigate = useNavigate();
+	const token = localStorage.getItem("token")
+
+	const handleLogOut = () => {
+		actions.logOut();
+		navigate('/')
+	};
+
+	useEffect(() => {
+		if (store.people.length === 0) {
+			actions.getPeoples();
 		}
-	},[] )
-console.log(favoritos);
+	}, []);
+
+	// useEffect(() => {
+	// 	if (store.people.length !== 0) {
+	// 		actions.myPeopInRent();
+	// 		actions.favorites();
+	// 	}
+	// }, [store.vehicles]);
+
 	return (
-		<nav className="navbar navbar-light bg-secondary mb-4">
-			<Link to="/">
-				<span className="navbar-brand ms-5"></span>
-				<img src="https://i.pinimg.com/originals/b4/b5/fd/b4b5fdf7bf06601ad4bd1cc6f73acff3.png" style={{ width: "7rem" }} />
-			</Link>
-			<div className="ml-auto d-flex">
-				{/* <!-- Example single danger button --> */}
-				<div className="btn-group me-5">
-				<button type="submit" className="btn btn-primary">Submit</button>
-            <Link to={'/login'}>
-                <button type="submit" className="btn btn-primary">Login</button>
-            </Link>
-			{store.favorites?.length >0 && (
-				<>
-				<button type="button" className="btn btn-primary d-flex rounded" 
-						data-bs-toggle="dropdown" aria-expanded="false">Favorites
-						<div className="contador px-1 bg-secundary"><span>{favoritos.length}</span></div>
-						<div className= "dropdown-toggle px-1"></div>
-					</button>
-					<ul className="dropdown-menu">
-						{store.favorites.map((item) => {
-							return (
-								<li className="d-flex">
-									<a className="dropdown-item">{item.name}</a>
-									<span className="delete" onClick={() => actions.deleteFavorite(item)}>
-										<i className="fas fa-trash-alt me-2"></i>
-									</span>
-								</li>
-							)
-						})}
-					</ul>
-					</>
-			)}
+		<nav className="navbar navbar-light mb-5 d-flex flex-nowrap">
+			<div className="container-fluid mx-2">
+				<div className="d-flex gap-3">
+					<Link to="/">
+						<img className="logo" src={logoImageUrl} />
+					</Link>
+					<h2 className="navbar-text ms-2 me-5 mt-3 mb-2 display-4 text-center text-white fs-2"><strong></strong></h2>
 				</div>
+				{token ?
+					<>
+						<button
+							className="d-flex me-4 navbar-toggler bg-white align-items-center rounded-pill"
+							type="button"
+							data-bs-toggle="offcanvas"
+							data-bs-target="#offcanvasNavbar"
+							aria-controls="offcanvasNavbar"
+							aria-label="Toggle navigation"
+						>
+							<div><span className=" navbarbutton navbar-toggler-icon me-2"></span></div>
+							<div className="usericon"><i className="fas fa-user-circle"></i></div>
+						</button>
+						<div className="offcanvas offcanvas-end" tabIndex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
+							<div className="offcanvas-header my-0">
+								<h4 className="offcanvas-title" id="offcanvasNavbarLabel"><strong>Menú</strong></h4>
+								<button type="button" className="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+							</div>
+							<div className="offcanvas-body">
+								<ul className="navbar-nav justify-content-end flex-grow-1 pe-3">
+									<li className="nav-item mb-3" data-bs-toggle="offcanvas">
+										<Link to="/favoritos" className="text-decoration-none">
+											<div className="fs-5 text-black text-decoration-none"><i className="fas fa-heart pe-3"></i>Mis Favoritos</div>
+										</Link>
+									</li>
+									<li className="nav-item dropdown mb-3" data-bs-toggle="offcanvas">
+										<Link to="/miscoches" className="text-decoration-none">
+											<div className="fs-5 text-black text-decoration-none"><i className="fas fa-car pe-3"></i>Mis Coches</div>
+										</Link>
+									</li>
+									<li className="nav-item mb-4" data-bs-toggle="offcanvas">
+										<Link to="/agregarvehiculo" className="text-decoration-none">
+											<div className="fs-5 text-black text-decoration-none"><i className="fas fa-plus-circle pe-3"></i>Pon tu coche en Friendly Wheels</div>
+										</Link>
+									</li>
+									<li className="nav-item mb-1" data-bs-toggle="offcanvas">
+										<Link to="/" className="text-decoration-none">
+											<div className="fs-5 text-black text-decoration-none" onClick={handleLogOut}><i className="fas fa-sign-out-alt pt-3 pe-3"></i>Cerrar sesión</div>
+										</Link>
+									</li>
+								</ul>
+							</div>
+						</div>
+					</>
+					: (
+						<div>
+							<button
+								className="d-flex navbar-toggler bg-white align-items-center rounded-pill"
+								type="button"
+								data-bs-toggle="offcanvas"
+								data-bs-target="#offcanvasNavbar"
+								aria-controls="offcanvasNavbar"
+								aria-label="Toggle navigation"
+							>
+								<div><span className=" navbarbutton navbar-toggler-icon me-2"></span></div>
+								<div className="usericon"><i className="fas fa-user-circle"></i></div>
+							</button>
+							<div className="offcanvas offcanvas-end" tabIndex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
+								<div className="offcanvas-header">
+									<h4 className="offcanvas-title" id="offcanvasNavbarLabel"><strong>Menú</strong></h4>
+									<button type="button" className="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+								</div>
+								<div className="offcanvas-body">
+									<ul className="navbar-nav justify-content-end flex-grow-1 pe-3">
+										<li className="nav-item mb-2" data-bs-toggle="offcanvas">
+											<Link to="/login" className="text-decoration-none">
+												<div className="text-black fs-5"><i className="fas fa-sign-in-alt pe-3" />Inicia sesión</div>
+											</Link>
+										</li>
+										<li className="nav-item mb-3" data-bs-toggle="offcanvas">
+											<Link to="/signup" className="text-decoration-none">
+												<div className="text-black fs-5"><i className="fas fa-user-plus pe-3" />Regístrate</div>
+											</Link>
+										</li>
+									</ul>
+								</div>
+							</div>
+						</div>
+					)
+				}
 			</div>
 		</nav>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-		// <nav className="navbar navbar-light bg-light mb-3 - p-4">
-		// 	<Link to="/">
-		// 		<span className="navbar-brand mb-0 h1">React Boilerplate</span>
-		// 	</Link>
-		// 	<div className="ml-auto">
-		// 		<Link to="/home">
-		// 			<button className="btn btn-primary">Favorites</button>
-		// 		</Link>
-		// 	</div>
-		// </nav>
 	);
 };

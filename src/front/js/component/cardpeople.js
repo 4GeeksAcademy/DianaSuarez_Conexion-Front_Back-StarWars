@@ -1,21 +1,20 @@
-import React, { useContext, useEffect, useState } from "react";
-import { Context } from "../store/appContext.js";
+import React, {useState, useContext, useEffect} from "react";
 import { Link } from "react-router-dom";
-import "../../styles/home.css";
+import { Context } from "../store/appContext.js";
 
-export const CardPeople = ({ card }) => {
+export const CardPeople = ({ people }) => {
+    const { store, actions } = useContext(Context);
+    const token = localStorage.getItem("token");
 
     return (
-        <div className="card col-3" style={{ width: "18rem" }}>
-            <div className="card">
-                <img src="https://static.vecteezy.com/system/resources/previews/010/519/506/non_2x/hello-speech-bubbles-with-cartoon-character-free-vector.jpg"
-                    className="card-img-top img-fluid w-250 h-150" alt="..." />
-    
-                {/* <div className="d-flex justify-content-between mb-4 m-3">
-                    <Link to={`/detailpeople/${card.uid}`}>
-                        <button className="btn btn-outline-primary" type="button">Learn more!</button>
-                    </Link>
-                </div> */}
+        <div className="people card col-md-4" style={{ width: "22rem", height: "27rem" }}>
+            <div>
+                <a className="cardpeople" href="#">
+                    <img className="img1" src={people.url_img1} style={{width: "100%", objectFit: "cover", height: "12rem"}} />
+                </a>
+            </div>
+            <div className="card-body ms-2 p-2">
+                <h3 className="card-title mt-2 mb-4 text-success"><strong>Full Stack Developer</strong></h3>
             </div>
         </div>
     )

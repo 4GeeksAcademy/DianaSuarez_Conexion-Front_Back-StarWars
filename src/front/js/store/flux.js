@@ -1,14 +1,24 @@
 const getState = ({ getStore, getActions, setStore }) => {
 	return {
 		store: {
-			peoples: [],
-			characters: [],
-			card: [],
+			message: null,
 			people: [],
-			favorites: [],
+			peoples: []
 		},
 
 		actions: {
+			getMessage: async () => {
+				try {
+					// fetching data from the backend
+					const resp = await fetch(process.env.BACKEND_URL + "")
+					const data = await resp.json()
+					setStore({ message: data.message })
+					// don't forget to return something, that is how the async resolves
+					return data;
+				} catch (error) {
+					console.log("Error loading message from backend", error)
+				}
+			},			
 		
 		login: async (email, password) => {
 			try {
@@ -67,18 +77,17 @@ const getState = ({ getStore, getActions, setStore }) => {
 			}
 		},
 
-			getMessage: async () => {
-				try {
-					// fetching data from the backend
-					const resp = await fetch(process.env.BACKEND_URL + "")
-					const data = await resp.json()
-					setStore({ message: data.message })
-					// don't forget to return something, that is how the async resolves
-					return data;
-				} catch (error) {
-					// console.log("Error loading message from backend", error)
-				}
-			},
+		getPeoples: async () => {
+			const response = await fetch(`${process.env.BACKEND_URL}/api/people`, {
+				method: 'GET'
+			})
+			if (response.status === 200) {
+				const data = await response.json();
+				setStore({ peoples: data.results })
+			} else {
+				return [];
+			}	
+		},
 		}
 	};
 };
