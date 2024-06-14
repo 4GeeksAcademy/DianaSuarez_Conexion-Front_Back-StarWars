@@ -2,7 +2,7 @@ import React, { useContext, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Context } from "../store/appContext";
 import logoImageUrl from "../../img/Logo2.png";
-import "../../styles/index.css";
+import "../../styles/home.css";
 
 export const Navbar = () => {
 	const { store, actions } = useContext(Context)
@@ -14,22 +14,9 @@ export const Navbar = () => {
 		navigate('/')
 	};
 
-	useEffect(() => {
-		if (store.people.length === 0) {
-			actions.getPeoples();
-		}
-	}, []);
-
-	// useEffect(() => {
-	// 	if (store.people.length !== 0) {
-	// 		actions.myPeopInRent();
-	// 		actions.favorites();
-	// 	}
-	// }, [store.vehicles]);
-
 	return (
 		<nav className="navbar navbar-light mb-5 d-flex flex-nowrap">
-			<div className="container-fluid mx-2">
+			<div className="container">
 				<div className="d-flex gap-3">
 					<Link to="/">
 						<img className="logo" src={logoImageUrl} />
@@ -56,21 +43,6 @@ export const Navbar = () => {
 							</div>
 							<div className="offcanvas-body">
 								<ul className="navbar-nav justify-content-end flex-grow-1 pe-3">
-									<li className="nav-item mb-3" data-bs-toggle="offcanvas">
-										<Link to="/favoritos" className="text-decoration-none">
-											<div className="fs-5 text-black text-decoration-none"><i className="fas fa-heart pe-3"></i>Mis Favoritos</div>
-										</Link>
-									</li>
-									<li className="nav-item dropdown mb-3" data-bs-toggle="offcanvas">
-										<Link to="/miscoches" className="text-decoration-none">
-											<div className="fs-5 text-black text-decoration-none"><i className="fas fa-car pe-3"></i>Mis Coches</div>
-										</Link>
-									</li>
-									<li className="nav-item mb-4" data-bs-toggle="offcanvas">
-										<Link to="/agregarvehiculo" className="text-decoration-none">
-											<div className="fs-5 text-black text-decoration-none"><i className="fas fa-plus-circle pe-3"></i>Pon tu coche en Friendly Wheels</div>
-										</Link>
-									</li>
 									<li className="nav-item mb-1" data-bs-toggle="offcanvas">
 										<Link to="/" className="text-decoration-none">
 											<div className="fs-5 text-black text-decoration-none" onClick={handleLogOut}><i className="fas fa-sign-out-alt pt-3 pe-3"></i>Cerrar sesión</div>

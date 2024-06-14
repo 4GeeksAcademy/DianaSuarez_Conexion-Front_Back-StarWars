@@ -2,13 +2,14 @@ import React, { useState, useContext } from "react";
 import { Context } from "../store/appContext";
 import { useNavigate } from "react-router-dom";
 import swal from 'sweetalert';
-import "../../styles/home.css";
+import "../../styles/index.css";
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 
 export const SignupForm = () => {
     const { actions } = useContext(Context);
     const navigate = useNavigate();
+    
     const formik = useFormik({
         initialValues: {
             inputEmail: '',
@@ -23,8 +24,8 @@ export const SignupForm = () => {
             async function handleSubmit() {
                 let isSignup = await actions.signup(values.inputEmail, values.inputPassword)
                 if (isSignup === "success") {
-                    swal("Registro con éxito", "Gracias por registrarse en nuestra web!", "success")
-                    navigate("/");
+                    swal("Registro con éxito", "Gracias por registrarte en esta pequeña web", "success")
+                    navigate("/login");
                 } else if (isSignup === "email_exist") {
                     swal("Este correo ya se encuentra registrado", "Por favor inténtelo con otro correo", "error")
                 } 
@@ -35,10 +36,10 @@ export const SignupForm = () => {
 
     return (
         <div className="contactForm">
-            <h1 className="title text-center pb-4">Crear cuenta</h1>
+            <h2 className="title text-center pb-4">Crear cuenta</h2>
             <form onSubmit={formik.handleSubmit}>
                 <div className="mb-3">
-                    <label htmlFor="InputEmail" className="form-label" style={{ color: 'green' }}>Correo electrónico</label>
+                    <label htmlFor="InputEmail" className="form-label subtitle">Correo electrónico</label>
                     <input type="email" className="form-control" name="inputEmail" id="inputEmail" placeholder="Ingrese su correo electrónico" onChange={formik.handleChange}
                         onBlur={formik.handleBlur}
                         value={formik.values.inputEmail} />
@@ -47,7 +48,7 @@ export const SignupForm = () => {
                     ) : null}
                 </div>
                 <div className="mb-3">
-                    <label htmlFor="InputPassword" className="form-label" style={{ color: 'green' }}>Contraseña</label>
+                    <label htmlFor="InputPassword" className="form-label subtitle">Contraseña</label>
                     <input type="password" className="form-control" name="inputPassword" id="inputPassword" placeholder="xxxxxxx" onChange={formik.handleChange}
                         onBlur={formik.handleBlur}
                         value={formik.values.inputPassword} />
@@ -56,7 +57,7 @@ export const SignupForm = () => {
                     ) : null}
                 </div>
                 <div className="d-flex justify-content-center mt-5">
-                    <button type="submit" className="login btn-lg btn-dark" data-bs-toggle="modal" data-bs-target="#exampleModal">Regístrate</button>
+                    <button type="submit" className="login btn-lg btn-custom" data-bs-toggle="modal" data-bs-target="#exampleModal">Registrarse</button>
                 </div>
             </form>
         </div>

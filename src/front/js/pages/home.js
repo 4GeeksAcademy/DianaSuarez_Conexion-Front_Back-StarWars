@@ -1,36 +1,18 @@
-import React, { useContext, useEffect, useState } from "react";
-import { Context } from "../store/appContext";
-import { CardPeople } from "../component/cardpeople";
-import { useNavigate } from "react-router-dom";
-import swal from 'sweetalert';
+import React from "react";
 import "../../styles/home.css";
+import homeImage from "../../img/Home1.png";
 
 export const Home = () => {
-	const { store, actions } = useContext(Context);
-	const navigate = useNavigate();
-
-	useEffect(() => {
-		actions.getPeoples();
-	}, []);
 
 	return (
 		<>
 			<div className="mt-5 d-flex justify-content-center text-center fs-4 text-dark-80">
-				<p><strong>full stack developer</strong></p>
-			</div>
-			<div className="footer-view text-danger people mb-5 mt-2 justify-content-center bg-light">
-				<div className="container">
-					<div className="row text-dark d-flex justify-content-center gap-4">
-						{store.people.map((people) => {
-							return (
-								<CardPeople people={people} key={people.id} />
-							)
-						})
-						}
-					</div>
+			<div className="w-450 ms-5 mx-5 rounded">
+				<img src={homeImage} />
 				</div>
+			</div>
+			<div className="footer-view mb-5 mt-2 justify-content-center bg-light">
 			</div>
 		</>
 	);
-};
-
+}

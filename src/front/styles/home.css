@@ -24,11 +24,11 @@
     justify-content: center;
 }
 
-body{
-    min-height: 800vh; 
-}
+/* body{
+    max-width: 800vh; 
+} */
 
 footer {
     background: #1d2952d0 !important;
-    height: 110px
+    min-height: 100px;
 }

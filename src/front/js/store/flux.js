@@ -51,45 +51,55 @@ const getState = ({ getStore, getActions, setStore }) => {
 				myPeople: [] 
 			});
 		},
+
 		signup: async (email, password) => {
-			try {
-				const response = await fetch(`${process.env.BACKEND_URL}/api/signup`, {
+                try {
+					const response = await fetch(`${process.env.BACKEND_URL}/api/signup`, {
+						method: 'POST',
+						headers: {
+							'Content-Type': 'application/json'
+						},
+						body: JSON.stringify({
+							email: email,
+							password: password
+						})
+					});
+					let data = await response.json()
+					if (response.status === 201) {
+						localStorage.setItem("token", data.access_token);
+						return "success";
+					} else if (response.status === 409) {
+						return "email_exist";
+					} else {
+						return "incomplete_data"
+					}
+				} catch (error) {
+					return false;
+				}
+			},		
+			isAuthenticated: (token) => {
+				const options = {
 					method: 'POST',
 					headers: {
-						'Content-Type': 'application/json'
+						"Content-Type": "application/json",
+						"Authorization": 'Bearer ' + token
 					},
-					body: JSON.stringify({
-						email: email,
-						password: password
+					body: JSON.stringify({})
+				};
+				fetch(process.env.BACKEND_URL + "/api/private", options)
+					.then(response => {
+						if (response.status === 200) {
+							return response.json();
+						} else {
+							throw new Error("Hubo un problema en la solicitud de inicio de sesión");
+						}
 					})
-				});
-				let data = await response.json()
-				if (response.status === 201) {
-					localStorage.setItem("token", data.access_token);
-					return "success";
-				} else if (response.status === 409) {
-					return "email_exist";
-				} else {
-					return "incomplete_data"
-				}
-			} catch (error) {
-				return false;
-			}
-		},
-
-		getPeoples: async () => {
-			const response = await fetch(`${process.env.BACKEND_URL}/api/people`, {
-				method: 'GET'
-			})
-			if (response.status === 200) {
-				const data = await response.json();
-				setStore({ peoples: data.results })
-			} else {
-				return [];
-			}	
-		},
+					.then(data => {
+						setStore({ storeToken: true });
+					})	
+					.catch(error => console.log('error', error));
+			},
 		}
 	};
 };
-
 export default getState;
